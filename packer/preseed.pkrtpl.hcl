@@ -46,16 +46,16 @@ d-i partman/confirm_nooverwrite boolean true
 
 # Package selection
 tasksel tasksel/first multiselect standard, ssh-server
-d-i pkgsel/include string qemu-guest-agent sudo curl cloud-init rsync netplan.io systemd-resolved jq
-d-i pkgsel/upgrade select full-upgrade
+d-i pkgsel/include string qemu-guest-agent sudo curl cloud-init rsync systemd-resolved jq
+d-i pkgsel/upgrade select none
 
 # Boot loader installation
 d-i grub-installer/only_debian boolean true
 d-i grub-installer/with_other_os boolean true
 d-i grub-installer/bootdev string default
 
-# Final commands: Add SSH key, netplan config and Sudoers entry
 d-i preseed/late_command string \
+    echo "nameserver 192.168.11.99 > /target/etc/resolv.conf; \
     in-target mkdir -p /home/kevin/.ssh; \
     echo "${ssh_key}" > /target/home/kevin/.ssh/authorized_keys; \
     in-target chown -R kevin:kevin /home/kevin/.ssh; \
