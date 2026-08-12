@@ -1,25 +1,30 @@
+# Early command: Ensure target resolv.conf is copied during disk mount
+d-i preseed/early_command string \
+    mkdir -p /target/etc; \
+    cp -f /etc/resolv.conf /target/etc/resolv.conf
+
 # Localization
 d-i debian-installer/locale string en_US
 d-i keyboard-configuration/xkb-keymap select us
 
 # Network configuration
 d-i netcfg/choose_interface select auto
+d-i netcfg/disable_dhcp boolean false
 d-i netcfg/get_hostname string unassigned-hostname
 d-i netcfg/get_domain string unassigned-domain
-d-i netcfg/get_nameservers string 192.168.11.99
+d-i netcfg/get_nameservers string 192.168.11.99 1.1.1.1
 d-i netcfg/wireless_wep string
 
-# Mirror settings (Official Debian Repositories)
+# Mirror settings
 d-i mirror/country string manual
 d-i mirror/http/hostname string deb.debian.org
 d-i mirror/http/directory string /debian
 d-i mirror/http/proxy string
-
-# Set release explicitly to Debian 12 (Bookworm)
 d-i mirror/suite string bookworm
 d-i mirror/codename string bookworm
 
-# Apt repository setup
+# Force copying DNS into target system before apt-setup runs
+d-i apt-setup/local0/repository string deb http://deb.debian.org/debian bookworm main
 d-i apt-setup/use_mirror boolean true
 d-i apt-setup/services-select multiselect security, updates
 d-i apt-setup/security_host string security.debian.org
@@ -56,9 +61,9 @@ d-i grub-installer/only_debian boolean true
 d-i grub-installer/with_other_os boolean true
 d-i grub-installer/bootdev string default
 
-# Final commands (SSH key setup, DNS fallback, and cloud-init config)
+# Final commands
 d-i preseed/late_command string \
-    echo "nameserver 192.168.11.99" > /target/etc/resolv.conf; \
+    cp -f /etc/resolv.conf /target/etc/resolv.conf; \
     in-target mkdir -p /home/kevin/.ssh; \
     echo "${ssh_key}" > /target/home/kevin/.ssh/authorized_keys; \
     in-target chown -R kevin:kevin /home/kevin/.ssh; \
