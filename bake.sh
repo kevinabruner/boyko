@@ -1,5 +1,5 @@
 #!/bin/bash
-app_name="packer"
+app_name="boyko"
 
 echo "--- Pulling latest configuration ---"
 git pull || { echo "Git pull failed"; return 1; }
