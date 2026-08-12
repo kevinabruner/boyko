@@ -97,7 +97,8 @@ source "proxmox-iso" "debian-base" {
     "DEBIAN_FRONTEND=noninteractive ",
     "auto=true ",
     "interface=auto ",
-    "<enter>"
+    "<enter>",
+    "<leftAltOn><f4><leftAltOff>"
   ]
   
   ssh_username = "kevin"
