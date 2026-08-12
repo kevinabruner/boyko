@@ -134,6 +134,26 @@ build {
       "sudo truncate -s 0 /etc/machine-id",
       "sudo sync",
       "sudo rm /etc/environment"
+
+    ]
+  }
+  #packages
+  provisioner "shell" {
+    inline = [
+      "echo '==> Updating apt and installing systemd networking tools...'",
+      "sudo apt-get update",
+      "sudo apt-get install -y netplan.io systemd-resolved",
+      
+      # Enable and start systemd-resolved safely in the booted OS
+      "sudo systemctl enable systemd-resolved",
+      "sudo systemctl start systemd-resolved",
+
+      # Link resolv.conf to systemd-resolved's stub file
+      "sudo ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf",
+
+      # Optional: Clean up apt cache for smaller image footprint
+      "sudo apt-get clean",
+      "sudo rm -rf /var/lib/apt/lists/*"
     ]
   }
   post-processor "shell-local" {
