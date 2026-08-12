@@ -85,20 +85,21 @@ source "proxmox-iso" "debian-base" {
 
   boot_wait = "10s" 
   
-  boot_command = [
+boot_command = [
     "<esc><wait>",
     "/install.amd/vmlinuz initrd=/install.amd/initrd.gz ",
     "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg ",
     "debian-installer/locale=en_US.UTF-8 ",
     "keyboard-configuration/xkb-keymap=us ",
+    "netcfg/choose_interface=auto ",
     "netcfg/get_hostname=proxy ",
     "netcfg/get_domain=unassigned-domain ",
+    "netcfg/get_nameservers=192.168.11.99 ",
     "fb=false debconf/priority=critical ",
     "DEBIAN_FRONTEND=noninteractive ",
     "auto=true ",
-    "interface=auto ",
-    "<enter><wait10>",
-    "<leftAltOn><f4><leftAltOff>"
+    "<enter><wait10> ",
+    "<leftAltOn><f4><leftAltOff> "
   ]
   
   ssh_username = "kevin"
