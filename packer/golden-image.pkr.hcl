@@ -97,7 +97,7 @@ source "proxmox-iso" "debian-base" {
     "DEBIAN_FRONTEND=noninteractive ",
     "auto=true ",
     "interface=auto ",
-    "<enter>",
+    "<enter><wait10>",
     "<leftAltOn><f4><leftAltOff>"
   ]
   
