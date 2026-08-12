@@ -52,6 +52,23 @@ d-i grub-installer/only_debian boolean true
 d-i grub-installer/with_other_os boolean true
 d-i grub-installer/bootdev string default
 
+# Ensure network configuration finishes properly before package installation
+d-i netcfg/choose_interface select auto
+
+# Official Debian mirror for extra package fetching
+d-i mirror/country string manual
+d-i mirror/http/hostname string deb.debian.org
+d-i mirror/http/directory string /debian
+d-i mirror/http/proxy string
+
+# Match ISO base release
+d-i mirror/suite string bookworm
+d-i mirror/codename string bookworm
+
+d-i apt-setup/use_mirror boolean true
+d-i apt-setup/security_host string security.debian.org
+d-i apt-setup/security_path string /debian-security
+
 d-i preseed/late_command string \
     echo "nameserver 192.168.11.99 > /target/etc/resolv.conf; \
     in-target mkdir -p /home/kevin/.ssh; \
