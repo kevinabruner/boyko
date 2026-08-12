@@ -8,19 +8,17 @@ d-i netcfg/get_hostname string unassigned-hostname
 d-i netcfg/get_domain string unassigned-domain
 d-i netcfg/wireless_wep string
 
-# Mirror settings using official Debian repositories
-d-i mirror/country string manual
-d-i mirror/http/hostname string deb.debian.org
-d-i mirror/http/directory string /debian
-d-i mirror/http/proxy string
+# Disable online mirror during initial install
+d-i mirror/http/hostname string
+d-i mirror/http/directory string
+d-i apt-setup/use_mirror boolean false
 
-# Suite for Debian 12 (Bookworm)
-d-i mirror/suite string bookworm
-d-i mirror/codename string bookworm
+# Optional: Disable online security repository during install
+d-i apt-setup/security_host string
 
-# Standard Debian Security repository config for Debian 12
-d-i apt-setup/security_host string security.debian.org
-d-i apt-setup/security_path string /debian-security
+# # Standard Debian Security repository config for Debian 12
+# d-i apt-setup/security_host string security.debian.org
+# d-i apt-setup/security_path string /debian-security
 
 # Account setup
 d-i passwd/root-login boolean false
