@@ -1,0 +1,4 @@
+dev_host: "{{ (groups['repo_boyko']) | intersect(groups['role_vm_template']))[0] }}"
+vmid: "{{ hostvars[dev_host].custom_fields.vmid }}"
+pve_node: "pve"
+golden_storage: "truenas-nfs"

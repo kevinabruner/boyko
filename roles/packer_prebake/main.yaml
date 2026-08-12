@@ -1,0 +1,16 @@
+- name: Check if VM {{ vmid }} exists
+  command: "qm status {{ vmid }}"
+  delegate_to: "{{ pve_node }}"
+  register: vm_status
+  failed_when: false
+  changed_when: false
+  become: true
+
+- name: Destroy existing golden template {{ vmid }}
+  shell: |
+    qm destroy {{ vmid }} --purge
+    rm -f /etc/pve/qmu-server/{{ vmid }}.conf
+  delegate_to: "{{ pve_node }}"
+  become: true
+  when: vm_status.rc == 0
+  register: destroy_output
