@@ -8,16 +8,18 @@ d-i netcfg/get_hostname string unassigned-hostname
 d-i netcfg/get_domain string unassigned-domain
 d-i netcfg/wireless_wep string
 
-# Use the local mirror FQDN/IP
-d-i mirror/http/hostname string mirror.jfkhome
+# Mirror settings using official Debian repositories
+d-i mirror/country string manual
+d-i mirror/http/hostname string deb.debian.org
 d-i mirror/http/directory string /debian
+d-i mirror/http/proxy string
 
-# Force the installer to use Trixie (Debian 13)
-d-i mirror/suite string trixie
-d-i mirror/codename string trixie
+# Suite for Debian 12 (Bookworm)
+d-i mirror/suite string bookworm
+d-i mirror/codename string bookworm
 
-# Handle the security split codified earlier
-d-i apt-setup/security_host string mirror.jfkhome
+# Standard Debian Security repository config for Debian 12
+d-i apt-setup/security_host string security.debian.org
 d-i apt-setup/security_path string /debian-security
 
 # Account setup

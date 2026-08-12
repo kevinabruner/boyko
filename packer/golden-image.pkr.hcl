@@ -87,20 +87,19 @@ source "proxmox-iso" "debian-base" {
   
   boot_command = [
     "<esc><wait>",
-    "install <wait>",
-    "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg <wait>",
-    "debian-installer/locale=en_US.UTF-8 <wait>",
-    "keyboard-configuration/xkb-keymap=us <wait>",
-    "netcfg/get_hostname=proxy <wait>",
-    "netcfg/get_domain=unassigned-domain <wait>",
-    "fb=false debconf/priority=critical <wait>",
-    "DEBIAN_FRONTEND=noninteractive <wait>", # Forces the installer to never ask questions
-    "auto=true <wait>",
-    "interface=auto <wait>",
-    "<enter><wait10>",
-    "<leftAltOn><f4><leftAltOff>"
+    "/install.amd/vmlinuz initrd=/install.amd/initrd.gz ",
+    "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg ",
+    "debian-installer/locale=en_US.UTF-8 ",
+    "keyboard-configuration/xkb-keymap=us ",
+    "netcfg/get_hostname=proxy ",
+    "netcfg/get_domain=unassigned-domain ",
+    "fb=false debconf/priority=critical ",
+    "DEBIAN_FRONTEND=noninteractive ",
+    "auto=true ",
+    "interface=auto ",
+    "<enter>"
   ]
-
+  
   ssh_username = "kevin"
   ssh_handshake_attempts = 100
   ssh_timeout  = "15m"
