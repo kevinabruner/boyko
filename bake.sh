@@ -29,7 +29,7 @@ fi
 echo "--- Found VMID: $VMID  ---"
 
 echo "--- Running Pre-flight Checklist ---"
-ansible-playbook _packer-preflight.yaml -e "vmid=$VMID" -e "target_app=$app_name" -e "pve_node=PVE" -K
+ansible-playbook _packer-preflight.yaml -e "vmid=$VMID" -e "target_app=$app_name" -K
 
 echo "--- Baking Gold Image for: $app_name ---"
 time packer build \
