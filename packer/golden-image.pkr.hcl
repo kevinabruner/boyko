@@ -129,12 +129,17 @@ build {
   # Step 2: Final Sanitization 
   provisioner "shell" {
     inline = [
+      "sudo swapoff -a",
+      "sudo sed -i '/swap/d' /etc/fstab",
+      "echo 'y' | sudo parted /dev/sda rm 5 || true",
+      "echo 'y' | sudo parted /dev/sda rm 2 || true",
+      "sudo cloud-init clean --logs",
+      "sudo truncate -s 0 /etc/machine-id",
       "sudo cloud-init clean --logs", # Crucial: Tells the OS "You haven't booted yet"
       "sudo rm -f /etc/netplan/00-installer-config.yaml", # Remove Packer's network config
       "sudo truncate -s 0 /etc/machine-id",
       "sudo sync",
       "sudo rm /etc/environment"
-
     ]
   }
   #packages
