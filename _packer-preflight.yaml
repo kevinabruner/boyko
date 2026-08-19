@@ -1,5 +1,5 @@
 - name: Build Drupal centrally
-  hosts: "all"
+  hosts: "localhost"
   gather_facts: false
   roles:
     - packer_prebake

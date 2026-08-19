@@ -1,3 +1,2 @@
-dev_host: "{{ (groups['repo_boyko']) | intersect(groups['role_vm_template']))[0] }}"
 pve_node: "pve"
 golden_storage: "truenas-nfs"
