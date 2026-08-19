@@ -142,6 +142,7 @@ build {
       "sudo rm /etc/environment"
     ]
   }
+  
   #packages
   provisioner "shell" {
     inline = [
